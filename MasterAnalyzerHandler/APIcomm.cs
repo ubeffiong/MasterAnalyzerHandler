@@ -104,7 +104,11 @@ namespace MasterAnalyzerHandler
             public string Id { get; set; }
             public string title { get; set; }
             public bool completed { get; set; }
-            //public string GetAssayCode(Orders.Id) { get; set; };
+            public string ParameterCode { get; set; }
+            public string AssayCode
+            {
+                get { return GetAssayCode(ParameterCode); }
+            }
         }
 
         public static string GetAssayCode (string hostParameterCode)
