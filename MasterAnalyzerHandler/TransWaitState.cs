@@ -1,7 +1,7 @@
 ﻿using MasterAnalyzerHandler;
 using static MasterAnalyzerHandler.ServiceMain;
 
-namespace MasterAnalyzerHandle
+namespace MasterAnalyzerHandler
 {
      [System.Runtime.Versioning.SupportedOSPlatform("windows")]
      class TransWaitState : ILISState

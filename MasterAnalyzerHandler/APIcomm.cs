@@ -90,8 +90,9 @@ namespace MasterAnalyzerHandler
                 var orderList = JsonConvert.DeserializeObject<List<Orders>>(messageTask);
                 foreach (var order in orderList)
                 {
-                    messageLog = $"\"{ 0}\\t\\t{ 1}\\t{ 2}\\t{ 3}\", {order.userID}, {order.Id}, {order.title}, {order.completed}";
+                    messageLog = $"\"{ 0}\\t\\t{ 1}\\t{ 2}\\t{ 3}\\\t{4}\", {order.userID}, {order.Id}, {order.title}, {order.completed}, {order.AssayCode}";
                     Console.WriteLine(messageLog);
+                    AppendToLog(messageLog);
                     //Console.WriteLine("{0}\t\t{1}\t{2}\t{3}", order.userID, order.Id, order.title, order.completed);
                 }
             }
@@ -107,7 +108,7 @@ namespace MasterAnalyzerHandler
             public string ParameterCode { get; set; }
             public string AssayCode
             {
-                get { return GetAssayCode(ParameterCode); }
+                get { return GetAssayCode(Id); }
             }
         }
 
@@ -124,19 +125,19 @@ namespace MasterAnalyzerHandler
 
         public static string ReturnHostCode(string machineCode)
         {
-            string hostParameterCode ="";
+            //string hostParameterCode ="";
             var assayFile = File.ReadAllText(@"AssayCodeMap/c311.json");
             var codeDictionary = JsonConvert.DeserializeObject<Dictionary<string, string>>(assayFile);
-            //var hostParameterCode = codeDictionary.FirstOrDefault(x => x.Value == machineCode).Key; //Linq query
+            var hostParameterCode = codeDictionary.FirstOrDefault(x => x.Value == machineCode).Key; //Linq query
 
-            foreach (var assay in codeDictionary)
-            {
-                if (assay.Value == machineCode)
-                {
-                    hostParameterCode = assay.Key;
-                    break;
-                }     
-            }
+            //foreach (var assay in codeDictionary)
+            //{
+            //    if (assay.Value == machineCode)
+            //    {
+            //        hostParameterCode = assay.Key;
+            //        break;
+            //    }     
+            //}
             string txt = $"Corresponding Host Code for {machineCode} \tis\t {hostParameterCode}";
             AppendToLog(txt);
             return hostParameterCode;
